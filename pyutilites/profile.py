@@ -28,10 +28,12 @@ def timestamp_init():
 timestamp_init()
 
 
-def timestamp(filename: str = __FILENAME):
+def timestamp(filename: str = __FILENAME, in_value=False, out_value=False):
     """
     Calculates function execution time (decorator).
     :param filename: file name of log (default __FILENAME)
+    :param in_value: prints input parameters if True
+    :param out_value: prints return value if True
     :return:
 
     Example:
@@ -64,9 +66,10 @@ def timestamp(filename: str = __FILENAME):
                     param += ", {}".format(kwargs)
                 f.write("{0:.9f}\t: {3:16.9f} ms: {1}({2})->{4}:\n".format(
                     start_time - __start_time,
-                    func.__name__, param,
+                    func.__name__,
+                    param if in_value else '',
                     duration * 1000.0,
-                    res
+                    res if out_value else ''
                 ))
             return res
         return wrapper
